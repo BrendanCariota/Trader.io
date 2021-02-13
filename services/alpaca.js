@@ -1,5 +1,5 @@
 import apisauce from 'apisauce'
-import config from '../config'
+import config from '../data/config'
 
 const alpacaApi = (baseURL = config.BASE_URL) => {
     
