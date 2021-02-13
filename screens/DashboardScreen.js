@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import alpacaApi from '../services/alpaca'
 import { dashboardStyle } from '../styles/styles'
+import { Ionicons } from '@expo/vector-icons'
 
 class DashboardScreen extends React.Component {
 
@@ -18,6 +19,7 @@ class DashboardScreen extends React.Component {
             cash: 0,
             long_market_value: 0,
             portfolio_value: 0,
+            positions: []
         }
     }
 
@@ -38,6 +40,34 @@ class DashboardScreen extends React.Component {
                 })
             }
         })
+
+        api.getPositions().then((response) => {
+            console.log(response)
+
+            if(response.ok) {
+                this.setState({
+                    positions: response.data
+                })
+            }
+        })
+    }
+
+    renderRow = ({item}) => {
+        return (
+            <View key={item.asset_id} style={dashboardStyle.position}>
+                <View style={dashboardStyle.positionsLeftCell}>
+                    <Text style={dashboardStyle.symbol}>{item.symbol}</Text>
+                    <Text style={dashboardStyle.subheading}>{item.qty} @ {item.avg_entry_price}</Text>
+                </View>
+                <View style={dashboardStyle.positionsRightCell}>
+                    <Text style={dashboardStyle.price}>{item.current_price}</Text>
+                    <Text style={dashboardStyle.subheading}>
+                        <Ionicons name="caret-up" size={20} color='green' />
+                        {(item.change_today * 100).toFixed(2)}
+                    </Text>
+                </View>
+            </View>
+        )
     }
 
     render() {
@@ -78,6 +108,11 @@ class DashboardScreen extends React.Component {
 
             <View style={dashboardStyle.positionsSection}>
                 <Text>Position Section</Text>
+                <FlatList
+                    data={this.state.positions}
+                    renderItem={this.renderRow}
+                    keyExtractor={item => item.asset_id}
+                />
             </View>
         </View>
     }
