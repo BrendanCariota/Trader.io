@@ -15,6 +15,7 @@ const alpacaApi = (baseURL = config.ALPACA_URL) => {
 
     const getAccount = () => api.get('v2/account')
     const getPositions = () => api.get('v2/positions')
+    const getActivities = () => api.get('v2/account/activities')
 
     const marketApi = apisauce.create({
         baseURL: config.ALPACA_DATA_URL,
@@ -30,6 +31,7 @@ const alpacaApi = (baseURL = config.ALPACA_URL) => {
     return {
         getAccount,
         getPositions,
+        getActivities,
         getLastTrade,
     }
 }

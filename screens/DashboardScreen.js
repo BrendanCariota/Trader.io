@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native'
 import alpacaApi from '../services/alpaca'
 import polygonApi from '../services/polygon'
 import { dashboardStyle } from '../styles/styles'
@@ -65,26 +65,26 @@ class DashboardScreen extends React.Component {
         
     }
 
-    renderRow = ({item}) => {
-        return (
-            <View key={item.asset_id} style={dashboardStyle.position}>
-                <View style={dashboardStyle.positionsLeftCell}>
-                    <Text style={dashboardStyle.symbol}>{item.symbol}</Text>
-                    <Text style={dashboardStyle.subheading}>{item.qty} @ {item.avg_entry_price}</Text>
-                </View>
-                <View style={dashboardStyle.positionsRightCell}>
-                    <Text style={dashboardStyle.price}>{item.current_price}</Text>
-                    <Text style={dashboardStyle.subheading}>
-                        <Ionicons name="caret-up" size={20} color='green' />
-                        {(item.change_today * 100).toFixed(2)}
-                    </Text>
-                </View>
-            </View>
-        )
-    }
+    // renderRow = ({item}) => {
+    //     return (
+    //         <View key={item.asset_id} style={dashboardStyle.position}>
+    //             <View style={dashboardStyle.positionsLeftCell}>
+    //                 <Text style={dashboardStyle.symbol}>{item.symbol}</Text>
+    //                 <Text style={dashboardStyle.subheading}>{item.qty} @ {item.avg_entry_price}</Text>
+    //             </View>
+    //             <View style={dashboardStyle.positionsRightCell}>
+    //                 <Text style={dashboardStyle.price}>{item.current_price}</Text>
+    //                 <Text style={dashboardStyle.subheading}>
+    //                     <Ionicons name="caret-up" size={20} color='green' />
+    //                     {(item.change_today * 100).toFixed(2)}
+    //                 </Text>
+    //             </View>
+    //         </View>
+    //     )
+    // }
 
     render() {
-        return <View style={dashboardStyle.dashboardLayout}>
+        return <ScrollView style={dashboardStyle.dashboardLayout}>
 
             <View style={dashboardStyle.accountSection}>
                 <Text style={dashboardStyle.heading}>Account</Text>
@@ -120,14 +120,29 @@ class DashboardScreen extends React.Component {
             </View>
 
             <View style={dashboardStyle.positionsSection}>
-                <Text style={dashboardStyle.heading}>Position Section</Text>
-                <FlatList
+                <Text style={dashboardStyle.heading_portfolio}>Position Section</Text>
+                {/* <FlatList
                     data={this.state.positions}
                     renderItem={this.renderRow}
                     keyExtractor={item => item.asset_id}
-                />
+                /> */}
+                {this.state.positions.map((item) => 
+                    <View key={item.asset_id} style={dashboardStyle.position}>
+                    <View style={dashboardStyle.positionsLeftCell}>
+                        <Text style={dashboardStyle.symbol}>{item.symbol}</Text>
+                        <Text style={dashboardStyle.subheading}>{item.qty} @ {item.avg_entry_price}</Text>
+                    </View>
+                    <View style={dashboardStyle.positionsRightCell}>
+                        <Text style={dashboardStyle.price}>{item.current_price}</Text>
+                        <Text style={dashboardStyle.subheading}>
+                            <Ionicons name="caret-up" size={20} color='green' />
+                            {(item.change_today * 100).toFixed(2)}
+                        </Text>
+                    </View>
+                </View>
+                )}
             </View>
-        </View>
+        </ScrollView>
     }
 }
 

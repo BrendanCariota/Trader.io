@@ -3,18 +3,17 @@ import { StyleSheet } from 'react-native'
 export const dashboardStyle = StyleSheet.create({
     // Screen
     dashboardLayout: {
-        flex: 1,
+        display: 'flex',
         flexDirection: 'column'
     },
 
     // Account
     accountSection: {
-        flex: 3,
         margin: 15,
         padding: 15,
     },
     accountDataContainer: {
-        flex: 1,
+        display: 'flex',
         flexDirection: 'row'
     },
     accountData: {
@@ -23,22 +22,23 @@ export const dashboardStyle = StyleSheet.create({
 
     // Market
     marketSection: {
-        flex: 5,
         margin: 15,
         padding: 15,
     },
     mainStockSection: {
-        flex: 1, 
+        display: 'flex',
         flexDirection: 'row',
         marginTop: 15,
+        justifyContent: 'center',
     },
     mainStock: {
-        flex: 1,
-        borderWidth: 1,
+        height: 100,
+        width: 80,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'green',
         margin: 5,
+        borderRadius: 5,
     },
     indexSymbol: {
         fontSize: 32,
@@ -50,7 +50,6 @@ export const dashboardStyle = StyleSheet.create({
 
     // Positions
     positionsSection: {
-        flex: 5,
         margin: 15,
         padding: 15,
     },
@@ -80,6 +79,14 @@ export const dashboardStyle = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: 'green'
+    },
+    heading_portfolio: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingBottom: 5,
+        borderBottomWidth: 1,
+        borderBottomColor: '#686868',
+        marginBottom: 10,
     },
 
     // Utility
