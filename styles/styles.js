@@ -11,6 +11,7 @@ export const dashboardStyle = StyleSheet.create({
     accountSection: {
         flex: 3,
         margin: 15,
+        padding: 15,
     },
     accountDataContainer: {
         flex: 1,
@@ -22,25 +23,36 @@ export const dashboardStyle = StyleSheet.create({
 
     // Market
     marketSection: {
-        flex: 2,
-        borderWidth: 1, 
-        borderColor: 'red'
+        flex: 5,
+        margin: 15,
+        padding: 15,
     },
     mainStockSection: {
         flex: 1, 
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: 15,
     },
     mainStock: {
         flex: 1,
         borderWidth: 1,
-        borderColor: 'orange'
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'green',
+        margin: 5,
+    },
+    indexSymbol: {
+        fontSize: 32,
+        color: 'white',
+    },
+    indexPrice: {
+        fontSize: 18,
     },
 
     // Positions
     positionsSection: {
         flex: 5,
-        borderWidth: 1,
-        borderColor: 'green'
+        margin: 15,
+        padding: 15,
     },
     position: {
         flex: 1,

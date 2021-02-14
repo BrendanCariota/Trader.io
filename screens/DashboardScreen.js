@@ -1,6 +1,7 @@
 import React from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import alpacaApi from '../services/alpaca'
+import polygonApi from '../services/polygon'
 import { dashboardStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -26,11 +27,11 @@ class DashboardScreen extends React.Component {
     componentDidMount() {
         console.log('fetch data from alpaca')
 
+        // --- ALPACA API ---
         const api = alpacaApi()
 
         api.getAccount().then((response) => {
-            console.log(response)
-
+    
             if (response.ok) {
                 this.setState({
                     buying_power: response.data.buying_power,
@@ -42,7 +43,6 @@ class DashboardScreen extends React.Component {
         })
 
         api.getPositions().then((response) => {
-            console.log(response)
 
             if(response.ok) {
                 this.setState({
@@ -50,6 +50,19 @@ class DashboardScreen extends React.Component {
                 })
             }
         })
+
+        const symbols = ['DIA', 'SPY', 'QQQ', 'IWM']
+        symbols.map((symbol) => {
+            api.getLastTrade(symbol).then((response) => {
+                console.log(response)
+                
+                let state = this.state
+                state[symbol] = response.data.last.price
+
+                this.setState(state)
+            })
+        })
+        
     }
 
     renderRow = ({item}) => {
@@ -96,18 +109,18 @@ class DashboardScreen extends React.Component {
             </View>
 
             <View style={dashboardStyle.marketSection}>
-                <Text>Market</Text>
+                <Text style={dashboardStyle.heading}>Market</Text>
                 <View style={dashboardStyle.mainStockSection}>
-                    <View style={dashboardStyle.mainStock}><Text>DIA</Text></View>
-                    <View style={dashboardStyle.mainStock}><Text>SPY</Text></View>
-                    <View style={dashboardStyle.mainStock}><Text>QQQ</Text></View>
-                    <View style={dashboardStyle.mainStock}><Text>IWM</Text></View>    
+                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>DIA</Text><Ionicons name="caret-up" size={20} color='white' /><Text style={dashboardStyle.indexPrice}>{this.state.DIA}</Text></View>
+                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>SPY</Text><Ionicons name="caret-up" size={20} color='white' /><Text style={dashboardStyle.indexPrice}>{this.state.SPY}</Text></View>
+                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>QQQ</Text><Ionicons name="caret-up" size={20} color='white' /><Text style={dashboardStyle.indexPrice}>{this.state.QQQ}</Text></View>
+                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>IWM</Text><Ionicons name="caret-up" size={20} color='white' /><Text style={dashboardStyle.indexPrice}>{this.state.IWM}</Text></View>    
                 </View>
                 
             </View>
 
             <View style={dashboardStyle.positionsSection}>
-                <Text>Position Section</Text>
+                <Text style={dashboardStyle.heading}>Position Section</Text>
                 <FlatList
                     data={this.state.positions}
                     renderItem={this.renderRow}
