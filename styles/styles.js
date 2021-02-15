@@ -4,7 +4,8 @@ export const dashboardStyle = StyleSheet.create({
     // Screen
     dashboardLayout: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundColor: '#fbf9f9',
     },
 
     // Account
@@ -36,9 +37,10 @@ export const dashboardStyle = StyleSheet.create({
         width: 80,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'green',
+        backgroundColor: '#31c715',
         margin: 5,
         borderRadius: 5,
+        elevation: 5,
     },
     indexSymbol: {
         fontSize: 32,
@@ -57,9 +59,14 @@ export const dashboardStyle = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         margin: 5,
-        borderWidth: 1,
         padding: 5,
         borderRadius: 5,
+        backgroundColor: 'white',
+        shadowColor: '#aebecd4d',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 10,
+        elevation: 5,
     },
     positionsLeftCell: {
         flex: 1,

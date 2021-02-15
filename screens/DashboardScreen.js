@@ -4,6 +4,7 @@ import alpacaApi from '../services/alpaca'
 import polygonApi from '../services/polygon'
 import { dashboardStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons'
+import NumberFormat from 'react-number-format'
 
 class DashboardScreen extends React.Component {
 
@@ -92,16 +93,16 @@ class DashboardScreen extends React.Component {
                 <View style={dashboardStyle.accountDataContainer}>
                     <View style={dashboardStyle.accountData}>
                         <Text style={dashboardStyle.label}>Buying Power</Text>
-                        <Text>{this.state.buying_power}</Text>
+                        <NumberFormat renderText={text => <Text>{text}</Text>} value={this.state.buying_power} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                         <Text style={dashboardStyle.label}>Long Market Value</Text>
-                        <Text>{this.state.long_market_value}</Text>
+                        <Text><NumberFormat renderText={text => <Text>{text}</Text>} value={this.state.long_market_value} displayType={'text'} thousandSeparator={true} prefix={'$'}/></Text>
                     </View>
                     
                     <View style={dashboardStyle.accountData}>
                         <Text style={dashboardStyle.label}>Portfolio Value</Text>
-                        <Text>{this.state.portfolio_value}</Text>
+                        <NumberFormat renderText={text => <Text>{text}</Text>} value={this.state.portfolio_value} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                         <Text style={dashboardStyle.label}>Cash</Text>
-                        <Text>{this.state.cash}</Text>
+                        <NumberFormat renderText={text => <Text>{text}</Text>} value={this.state.cash} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                     </View>
                 </View>
                 
@@ -111,10 +112,10 @@ class DashboardScreen extends React.Component {
             <View style={dashboardStyle.marketSection}>
                 <Text style={dashboardStyle.heading}>Market</Text>
                 <View style={dashboardStyle.mainStockSection}>
-                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>DIA</Text><Ionicons name="caret-up" size={20} color='white' /><Text style={dashboardStyle.indexPrice}>{this.state.DIA}</Text></View>
-                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>SPY</Text><Ionicons name="caret-up" size={20} color='white' /><Text style={dashboardStyle.indexPrice}>{this.state.SPY}</Text></View>
-                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>QQQ</Text><Ionicons name="caret-up" size={20} color='white' /><Text style={dashboardStyle.indexPrice}>{this.state.QQQ}</Text></View>
-                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>IWM</Text><Ionicons name="caret-up" size={20} color='white' /><Text style={dashboardStyle.indexPrice}>{this.state.IWM}</Text></View>    
+                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>DIA</Text><Ionicons name="caret-up" size={20} color='white' /><NumberFormat renderText={text => <Text style={dashboardStyle.indexPrice}>{text}</Text>} value={this.state.DIA} displayType={'text'} thousandSeparator={true} prefix={'$'}/></View>
+                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>SPY</Text><Ionicons name="caret-up" size={20} color='white' /><NumberFormat renderText={text => <Text style={dashboardStyle.indexPrice}>{text}</Text>} value={this.state.SPY} displayType={'text'} thousandSeparator={true} prefix={'$'}/></View>
+                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>QQQ</Text><Ionicons name="caret-up" size={20} color='white' /><NumberFormat renderText={text => <Text style={dashboardStyle.indexPrice}>{text}</Text>} value={this.state.QQQ} displayType={'text'} thousandSeparator={true} prefix={'$'}/></View>
+                    <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>IWM</Text><Ionicons name="caret-up" size={20} color='white' /><NumberFormat renderText={text => <Text style={dashboardStyle.indexPrice}>{text}</Text>} value={this.state.IWM} displayType={'text'} thousandSeparator={true} prefix={'$'}/></View>    
                 </View>
                 
             </View>
@@ -130,13 +131,13 @@ class DashboardScreen extends React.Component {
                     <View key={item.asset_id} style={dashboardStyle.position}>
                     <View style={dashboardStyle.positionsLeftCell}>
                         <Text style={dashboardStyle.symbol}>{item.symbol}</Text>
-                        <Text style={dashboardStyle.subheading}>{item.qty} @ {item.avg_entry_price}</Text>
+                        <Text style={dashboardStyle.subheading}>{item.qty} @ <NumberFormat renderText={text => <Text>{text}</Text>} value={item.avg_entry_price} displayType={'text'} thousandSeparator={true} prefix={'$'}/></Text>
                     </View>
                     <View style={dashboardStyle.positionsRightCell}>
-                        <Text style={dashboardStyle.price}>{item.current_price}</Text>
+                    <NumberFormat renderText={text => <Text style={dashboardStyle.price}>{text}</Text>} value={item.current_price} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                         <Text style={dashboardStyle.subheading}>
                             <Ionicons name="caret-up" size={20} color='green' />
-                            {(item.change_today * 100).toFixed(2)}
+                            {(item.change_today * 100).toFixed(2)}%
                         </Text>
                     </View>
                 </View>
