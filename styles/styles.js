@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 export const dashboardStyle = StyleSheet.create({
+    
     // Screen
     dashboardLayout: {
         display: 'flex',
@@ -20,6 +21,12 @@ export const dashboardStyle = StyleSheet.create({
     accountData: {
         flex: 1
     },
+    accountMoneyLabel: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#363636',
+
+    },
 
     // Market
     marketSection: {
@@ -37,7 +44,7 @@ export const dashboardStyle = StyleSheet.create({
         width: 80,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#31c715',
+        backgroundColor: '#429349',
         margin: 5,
         borderRadius: 5,
         elevation: 5,
@@ -56,8 +63,9 @@ export const dashboardStyle = StyleSheet.create({
         padding: 15,
     },
     position: {
-        flex: 1,
+        display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between',
         margin: 5,
         padding: 5,
         borderRadius: 5,
@@ -69,10 +77,10 @@ export const dashboardStyle = StyleSheet.create({
         elevation: 5,
     },
     positionsLeftCell: {
-        flex: 1,
+        marginLeft: 5,
     },
     positionsRightCell: {
-        flex: 1,
+        
     },
     symbol: {
        fontSize: 16, 
@@ -106,7 +114,7 @@ export const dashboardStyle = StyleSheet.create({
     },
     label: {
         paddingTop: 10,
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 14,
+        color: '#363636'
     }
 })
