@@ -1,12 +1,10 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native'
+import { FlatList, StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
 import alpacaApi from '../services/alpaca'
-import polygonApi from '../services/polygon'
 import { dashboardStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons'
 import NumberFormat from 'react-number-format'
-import { LineChart } from 'react-native-chart-kit'
-import { Dimensions } from 'react-native'
+import { VictoryBar, VictoryChart } from 'victory-native';
 
 class DashboardScreen extends React.Component {
 
@@ -26,6 +24,7 @@ class DashboardScreen extends React.Component {
             positions: [],
             accountChartXValues: [],
             accountChartYValues: [],
+            chartData: [{x: 'why', y: 'this'}],
         }
     }
 
@@ -82,8 +81,25 @@ class DashboardScreen extends React.Component {
                     accountChartXValues: xValues,
                     accountChartYValues: yValues,
                 })
+
+                var loopLength = xValues.length
+                var chartDataArray = []
+                for (var k = 0; k <= loopLength - 1; k++) {
+                    var xValue = xValues[k]
+                    var yValue = yValues[k]
+                    chartDataArray.push({x: xValue, y: yValue})
+                
+                }
+
+                this.setState({
+                    chartData: chartDataArray
+                })
+                
             }
+            
         })
+
+        
 
         const symbols = ['DIA', 'SPY', 'QQQ', 'IWM']
         symbols.map((symbol) => {
@@ -95,7 +111,6 @@ class DashboardScreen extends React.Component {
                 this.setState(state)
             })
         })
-        
     }
 
     render() {
@@ -120,57 +135,13 @@ class DashboardScreen extends React.Component {
                         <NumberFormat renderText={text => <Text style={dashboardStyle.accountMoneyLabel}>{text}</Text>} value={this.state.cash} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                     </View>
                 </View>
-
-                <View>
-                    <Text>Bezier Line Chart</Text>
-                    <LineChart
-                        data={{
-                        labels: this.state.accountChartXValues,
-                        datasets: [
-                            {
-                            data: [
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100
-                            ]
-                            }
-                        ]
-                        }}
-                        width={Dimensions.get("window").width - 60} // from react-native
-                        height={220}
-                        yAxisLabel="$"
-                        yAxisSuffix="k"
-                        yAxisInterval={1} // optional, defaults to 1
-                        chartConfig={{
-                        backgroundColor: "#e26a00",
-                        backgroundGradientFrom: "#fb8c00",
-                        backgroundGradientTo: "#ffa726",
-                        decimalPlaces: 2, // optional, defaults to 2dp
-                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        style: {
-                            borderRadius: 16
-                        },
-                        propsForDots: {
-                            r: "6",
-                            strokeWidth: "2",
-                            stroke: "#ffa726"
-                        }
-                        }}
-                        bezier
-                        style={{
-                        marginVertical: 8,
-                        borderRadius: 16
-                        }}
-                    />
-                </View>
-
-            
-                
             </View>
+
+            <VictoryChart>
+                <VictoryBar 
+                    data={this.state.chartData}
+                />
+            </VictoryChart>
 
             <View style={dashboardStyle.marketSection}>
                 <Text style={dashboardStyle.heading}>Market</Text>
