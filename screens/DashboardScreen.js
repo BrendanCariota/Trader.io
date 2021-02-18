@@ -4,7 +4,7 @@ import alpacaApi from '../services/alpaca'
 import { dashboardStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons'
 import NumberFormat from 'react-number-format'
-import { VictoryBar, VictoryChart } from 'victory-native';
+import { VictoryLine, VictoryScatter, VictoryGroup, VictoryChart, VictoryAxis, VictoryTooltip, VictoryVoronoiContainer } from 'victory-native';
 
 class DashboardScreen extends React.Component {
 
@@ -24,6 +24,8 @@ class DashboardScreen extends React.Component {
             positions: [],
             accountChartXValues: [],
             accountChartYValues: [],
+            minYValue: 0,
+            maxYValue: 0,
             chartData: [{x: 'why', y: 'this'}],
         }
     }
@@ -77,9 +79,15 @@ class DashboardScreen extends React.Component {
                     yValues.push(equityData[i])
                 }
 
+                var filteredYValues = yValues.filter(x => x)
+                const minYValue = Math.min.apply(Math, filteredYValues)
+                const maxYValue = Math.max.apply(Math, yValues)
+
                 this.setState({
                     accountChartXValues: xValues,
                     accountChartYValues: yValues,
+                    maxYValue: maxYValue,
+                    minYValue: minYValue,
                 })
 
                 var loopLength = xValues.length
@@ -94,7 +102,7 @@ class DashboardScreen extends React.Component {
                 this.setState({
                     chartData: chartDataArray
                 })
-                
+             
             }
             
         })
@@ -137,10 +145,28 @@ class DashboardScreen extends React.Component {
                 </View>
             </View>
 
-            <VictoryChart>
-                <VictoryBar 
+            <VictoryChart 
+                minDomain={{ y: this.state.minYValue - 100 }} 
+                maxDomain={{ y: this.state.maxYValue + 100 }}
+                containerComponent={<VictoryVoronoiContainer />}
+                width={Dimensions.get('window').width}
+            >
+                <VictoryAxis style={{ 
+                    axis: {stroke: "transparent"}, 
+                    ticks: {stroke: "transparent"},
+                    tickLabels: { fill:"transparent"} 
+                }} />
+                <VictoryGroup
+                    color='#c43a31'
+                    labels={({ datum }) => `y: ${datum.y}`}
+                    labelComponent={<VictoryTooltip style={{ fontSize: 10}} renderInPortal={false} />}
                     data={this.state.chartData}
-                />
+                >
+                    <VictoryLine/>
+                    <VictoryScatter 
+                        size={({ active }) => active ? 8 : 3}
+                    />
+                </VictoryGroup>
             </VictoryChart>
 
             <View style={dashboardStyle.marketSection}>
