@@ -62,11 +62,16 @@ class DashboardScreen extends React.Component {
 
                 const xValues = []
                 const yValues = []
+                const xValuesFormatted = []
+                const yValuesFormatted = []
 
                 const dataLength = response.data.timestamp.length
                 const timestampData = response.data.timestamp
                 const equityData = response.data.equity
 
+                console.log(dataLength)
+
+                // This loops through and formats the timestamp into a readable time
                 for (var i = 0; i <= dataLength - 1; i++) {
                     const oldTimestamp = timestampData[i]
                     var date = new Date(oldTimestamp * 1000)
@@ -75,9 +80,16 @@ class DashboardScreen extends React.Component {
                     var seconds = "0" + date.getSeconds()
                     var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
 
-                    xValues.push(formattedTime)
+                    // Creates an array of Formatted Times for the LABELS of the x axis of the graph
+                    xValuesFormatted.push(formattedTime)
+                    yValuesFormatted.push(equityData[i])
+
+                    // Creates an array of unformatted timestamps for PLOTTING values of the x axis of the graph
+                    xValues.push(timestampData[i])
                     yValues.push(equityData[i])
                 }
+
+                console.log(xValuesFormatted)
 
                 var filteredYValues = yValues.filter(x => x)
                 const minYValue = Math.min.apply(Math, filteredYValues)
@@ -145,29 +157,38 @@ class DashboardScreen extends React.Component {
                 </View>
             </View>
 
-            <VictoryChart 
-                minDomain={{ y: this.state.minYValue - 100 }} 
-                maxDomain={{ y: this.state.maxYValue + 100 }}
-                containerComponent={<VictoryVoronoiContainer />}
-                width={Dimensions.get('window').width}
-            >
-                <VictoryAxis style={{ 
-                    axis: {stroke: "transparent"}, 
-                    ticks: {stroke: "transparent"},
-                    tickLabels: { fill:"transparent"} 
-                }} />
-                <VictoryGroup
-                    color='#c43a31'
-                    labels={({ datum }) => `y: ${datum.y}`}
-                    labelComponent={<VictoryTooltip style={{ fontSize: 10}} renderInPortal={false} />}
-                    data={this.state.chartData}
+            <View style={dashboardStyle.chart}>
+                <VictoryChart 
+                    minDomain={{ y: this.state.minYValue - 100 }} 
+                    maxDomain={{ y: this.state.maxYValue + 100 }}
+                    containerComponent={<VictoryVoronoiContainer />}
+                    
                 >
-                    <VictoryLine/>
-                    <VictoryScatter 
-                        size={({ active }) => active ? 8 : 3}
+                    <VictoryAxis 
+                        style={{}} 
+                        tickCount={3}
                     />
-                </VictoryGroup>
-            </VictoryChart>
+                    <VictoryGroup
+                        color='#c43a31'
+                        labels={({ datum }) => `y: ${datum.y}`}
+                        labelComponent={
+                            <VictoryTooltip 
+                                style={{ fontSize: 10}} 
+                                renderInPortal={false} 
+                                center={{ x: 200, y: 25}} 
+                            />
+                        }
+                        data={this.state.chartData}
+                    >
+                        <VictoryLine
+                            
+                        />
+                        <VictoryScatter 
+                            size={({ active }) => active ? 8 : 3}
+                        />
+                    </VictoryGroup>
+                </VictoryChart>
+            </View>
 
             <View style={dashboardStyle.marketSection}>
                 <Text style={dashboardStyle.heading}>Market</Text>

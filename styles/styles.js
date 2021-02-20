@@ -28,6 +28,13 @@ export const dashboardStyle = StyleSheet.create({
 
     },
 
+    // Chart
+    chart: {
+        width: 100,
+        margin: 0,
+        padding: 0,
+    },
+
     // Market
     marketSection: {
         margin: 15,
