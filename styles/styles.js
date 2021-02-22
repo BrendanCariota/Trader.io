@@ -11,8 +11,8 @@ export const dashboardStyle = StyleSheet.create({
 
     // Account
     accountSection: {
-        margin: 15,
-        padding: 15,
+        margin: 10,
+        padding: 10,
     },
     accountDataContainer: {
         display: 'flex',
@@ -33,11 +33,19 @@ export const dashboardStyle = StyleSheet.create({
         
         padding: 0,
     },
+    chartBtns: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginLeft: 50,
+        marginRight: 50,
+    },
+
 
     // Market
     marketSection: {
-        margin: 15,
-        padding: 15,
+        margin: 10,
+        padding: 10,
     },
     mainStockSection: {
         display: 'flex',
@@ -65,8 +73,8 @@ export const dashboardStyle = StyleSheet.create({
 
     // Positions
     positionsSection: {
-        margin: 15,
-        padding: 15,
+        margin: 10,
+        padding: 10,
     },
     position: {
         display: 'flex',

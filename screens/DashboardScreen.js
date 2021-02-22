@@ -4,6 +4,7 @@ import alpacaApi from '../services/alpaca'
 import { dashboardStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons'
 import NumberFormat from 'react-number-format'
+import CustomButton from '../components/Button'
 
 import { VictoryLine, VictoryScatter, VictoryGroup, VictoryChart, VictoryAxis, VictoryTooltip, VictoryVoronoiContainer } from 'victory-native';
 
@@ -204,9 +205,15 @@ class DashboardScreen extends React.Component {
                         />
                     </VictoryGroup>
                 </VictoryChart>
+                <View style={dashboardStyle.chartBtns}>
+                    <CustomButton title='1D' />
+                    <CustomButton title='1W' />
+                    <CustomButton title='1M' />
+                    <CustomButton title='1Y' />
+                </View>
             </View>
 
-            <View style={dashboardStyle.marketSection}>
+            {/* <View style={dashboardStyle.marketSection}>
                 <Text style={dashboardStyle.heading}>Market</Text>
                 <View style={dashboardStyle.mainStockSection}>
                     <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>DIA</Text><Ionicons name="caret-up" size={20} color='#19502f' /><NumberFormat renderText={text => <Text style={dashboardStyle.indexPrice}>{text}</Text>} value={this.state.DIA} displayType={'text'} thousandSeparator={true} prefix={'$'}/></View>
@@ -214,8 +221,7 @@ class DashboardScreen extends React.Component {
                     <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>QQQ</Text><Ionicons name="caret-up" size={20} color='white' /><NumberFormat renderText={text => <Text style={dashboardStyle.indexPrice}>{text}</Text>} value={this.state.QQQ} displayType={'text'} thousandSeparator={true} prefix={'$'}/></View>
                     <View style={dashboardStyle.mainStock}><Text style={dashboardStyle.indexSymbol}>IWM</Text><Ionicons name="caret-up" size={20} color='white' /><NumberFormat renderText={text => <Text style={dashboardStyle.indexPrice}>{text}</Text>} value={this.state.IWM} displayType={'text'} thousandSeparator={true} prefix={'$'}/></View>    
                 </View>
-                
-            </View>
+            </View> */}
 
             <View style={dashboardStyle.positionsSection}>
                 <Text style={dashboardStyle.heading_portfolio}>Positions</Text>
