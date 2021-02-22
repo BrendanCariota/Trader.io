@@ -29,9 +29,8 @@ export const dashboardStyle = StyleSheet.create({
     },
 
     // Chart
-    chart: {
-        width: 100,
-        margin: 0,
+    chartContainer: {
+        
         padding: 0,
     },
 

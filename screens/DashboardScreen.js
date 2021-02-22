@@ -1,9 +1,10 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
+import { FlatList, StyleSheet, Text, View, ScrollView, Dimensions, SafeAreaView } from 'react-native'
 import alpacaApi from '../services/alpaca'
 import { dashboardStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons'
 import NumberFormat from 'react-number-format'
+
 import { VictoryLine, VictoryScatter, VictoryGroup, VictoryChart, VictoryAxis, VictoryTooltip, VictoryVoronoiContainer } from 'victory-native';
 
 class DashboardScreen extends React.Component {
@@ -69,8 +70,6 @@ class DashboardScreen extends React.Component {
                 const timestampData = response.data.timestamp
                 const equityData = response.data.equity
 
-                console.log(dataLength)
-
                 // This loops through and formats the timestamp into a readable time
                 for (var i = 0; i <= dataLength - 1; i++) {
                     const oldTimestamp = timestampData[i]
@@ -88,8 +87,6 @@ class DashboardScreen extends React.Component {
                     xValues.push(timestampData[i])
                     yValues.push(equityData[i])
                 }
-
-                console.log(xValuesFormatted)
 
                 var filteredYValues = yValues.filter(x => x)
                 const minYValue = Math.min.apply(Math, filteredYValues)
@@ -133,6 +130,9 @@ class DashboardScreen extends React.Component {
         })
     }
 
+
+    
+
     render() {
 
         return <ScrollView style={dashboardStyle.dashboardLayout}>
@@ -156,35 +156,51 @@ class DashboardScreen extends React.Component {
                     </View>
                 </View>
             </View>
-
-            <View style={dashboardStyle.chart}>
+            
+            <View style={dashboardStyle.chartContainer}>
                 <VictoryChart 
                     minDomain={{ y: this.state.minYValue - 100 }} 
                     maxDomain={{ y: this.state.maxYValue + 100 }}
-                    containerComponent={<VictoryVoronoiContainer />}
-                    
+                    containerComponent={<VictoryVoronoiContainer voronoiDimension='x'/>}
+                    height={250}
+                    width={Dimensions.get('window').width}
+                    padding={{ top: 0, bottom: 0}}
                 >
                     <VictoryAxis 
+                        style={{
+                            tickLabels: {fill: 'transparent'},
+                            axis: {strokeWidth: 2, strokeOpacity: 0.25}
+                        }} 
+                        tickCount={3}
+                        offsetY={125}
+                    />
+                    <VictoryAxis 
+                        dependentAxis
+                        crossAxis
                         style={{}} 
                         tickCount={3}
                     />
                     <VictoryGroup
-                        color='#c43a31'
+                        color='#d6ab00'
                         labels={({ datum }) => `y: ${datum.y}`}
                         labelComponent={
                             <VictoryTooltip 
-                                style={{ fontSize: 10}} 
+                                style={{ fontSize: 18}} 
                                 renderInPortal={false} 
                                 center={{ x: 200, y: 25}} 
+                                pointerLength={0}
                             />
                         }
                         data={this.state.chartData}
                     >
                         <VictoryLine
-                            
+                            interpolation='monotoneX'
+                            style={{
+                                data: { strokeWidth: 4}
+                            }}
                         />
                         <VictoryScatter 
-                            size={({ active }) => active ? 8 : 3}
+                            size={({ active }) => active ? 8 : 1}
                         />
                     </VictoryGroup>
                 </VictoryChart>
