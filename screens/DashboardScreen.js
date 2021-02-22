@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FlatList, StyleSheet, Text, View, ScrollView, Dimensions, SafeAreaView } from 'react-native'
 import alpacaApi from '../services/alpaca'
 import { dashboardStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons'
 import NumberFormat from 'react-number-format'
-import CustomButton from '../components/Button'
+import SwitchSelector from 'react-native-switch-selector'
 
 import { VictoryLine, VictoryScatter, VictoryGroup, VictoryChart, VictoryAxis, VictoryTooltip, VictoryVoronoiContainer } from 'victory-native';
+
+const options = [
+    {label: '1D', value: '1D'},
+    {label: '1W', value: '1W'},
+    {label: '1M', value: '1M'},
+    {label: '1Y', value: '1Y'},
+]
 
 class DashboardScreen extends React.Component {
 
@@ -131,9 +138,6 @@ class DashboardScreen extends React.Component {
         })
     }
 
-
-    
-
     render() {
 
         return <ScrollView style={dashboardStyle.dashboardLayout}>
@@ -205,12 +209,19 @@ class DashboardScreen extends React.Component {
                         />
                     </VictoryGroup>
                 </VictoryChart>
-                <View style={dashboardStyle.chartBtns}>
-                    <CustomButton title='1D' />
-                    <CustomButton title='1W' />
-                    <CustomButton title='1M' />
-                    <CustomButton title='1Y' />
-                </View>
+
+                <SwitchSelector
+                    options={options}
+                    initial={0}
+                    onPress={value => console.log(`Call onPress with value: ${value}`)}
+                    buttonColor='#d6ab00'
+                    backgroundColor='#fbf9f9'
+                    buttonMargin={20}
+                    fontSize={16}
+                    borderRadius={4}
+                    bold={true}
+                    textColor='#363636'
+                />
             </View>
 
             {/* <View style={dashboardStyle.marketSection}>

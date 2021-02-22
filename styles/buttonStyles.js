@@ -1,11 +1,18 @@
 import { StyleSheet } from 'react-native'
 
 export const buttonStyles = StyleSheet.create({
-    container: {
+    btnNormal: {
+        borderColor: 'blue',
+        borderWidth: 1,
         borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        
+        height: 30,
+        width: 30,
+      },
+      btnPress: {
+        borderColor: 'blue',
+        borderWidth: 1,
+        height: 30,
+        width: 30,
     },
     btnText: {
         fontSize: 18,
@@ -14,8 +21,5 @@ export const buttonStyles = StyleSheet.create({
         alignSelf: "center",
         textTransform: "uppercase",
         color: '#363636',
-    },
-    btnActive: {
-        backgroundColor: "#d6ab00",
     },
 })

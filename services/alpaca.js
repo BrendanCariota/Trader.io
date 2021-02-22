@@ -16,7 +16,7 @@ const alpacaApi = (baseURL = config.ALPACA_URL) => {
     const getAccount = () => api.get('v2/account')
     const getPositions = () => api.get('v2/positions')
     const getActivities = () => api.get('v2/account/activities')
-    const getPortfolioHistory = () => api.get('v2/account/portfolio/history?period=1W&timeframe=1H')
+    const getPortfolioHistory = () => api.get('v2/account/portfolio/history?period=1D&timeframe=15Min')
 
     const marketApi = apisauce.create({
         baseURL: config.ALPACA_DATA_URL,
