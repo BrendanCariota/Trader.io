@@ -244,9 +244,11 @@ class DashboardScreen extends React.Component {
                         <Text style={dashboardStyle.subheading}>{item.qty} @ <NumberFormat renderText={text => <Text>{text}</Text>} value={item.avg_entry_price} displayType={'text'} thousandSeparator={true} prefix={'$'}/></Text>
                     </View>
                     <View style={dashboardStyle.positionsRightCell}>
-                    <NumberFormat renderText={text => <Text style={dashboardStyle.price}>{text}</Text>} value={item.current_price} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
+                    <NumberFormat renderText={text => <Text style={[dashboardStyle.price, {color: item.current_price > item.avg_entry_price ? '#429449' : '#d91c2d'}]}>{text}</Text>} value={item.current_price} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                         <Text style={dashboardStyle.subheading}>
-                            <Ionicons name="caret-up" size={20} color='green' />
+                            {
+                                item.current_price > item.avg_entry_price ? <Ionicons name="caret-up" size={20} color='#429449' /> : <Ionicons name="caret-down" size={20} color='#d91c2d' />
+                            }
                             {(item.change_today * 100).toFixed(2)}%
                         </Text>
                     </View>

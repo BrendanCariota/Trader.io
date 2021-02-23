@@ -110,7 +110,7 @@ export const dashboardStyle = StyleSheet.create({
         color: 'green'
     },
     heading_portfolio: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
         paddingBottom: 5,
         borderBottomWidth: 1,
@@ -120,7 +120,7 @@ export const dashboardStyle = StyleSheet.create({
 
     // Utility
     heading: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
         paddingBottom: 5,
         borderBottomWidth: 1,
