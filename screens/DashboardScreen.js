@@ -5,6 +5,8 @@ import { dashboardStyle } from '../styles/styles'
 import { Ionicons } from '@expo/vector-icons'
 import NumberFormat from 'react-number-format'
 import SwitchSelector from 'react-native-switch-selector'
+import 'intl'
+import 'intl/locale-data/jsonp/en'
 
 import { VictoryLine, VictoryScatter, VictoryGroup, VictoryChart, VictoryAxis, VictoryTooltip, VictoryVoronoiContainer } from 'victory-native';
 
@@ -14,6 +16,12 @@ const options = [
     {label: '1M', value: '1M'},
     {label: '1Y', value: '1Y'},
 ]
+
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0
+  })
 
 class DashboardScreen extends React.Component {
 
@@ -187,7 +195,7 @@ class DashboardScreen extends React.Component {
                     />
                     <VictoryGroup
                         color='#d6ab00'
-                        labels={({ datum }) => `y: ${datum.y}`}
+                        labels={({ datum }) => `${formatter.format(datum.y)}`}
                         labelComponent={
                             <VictoryTooltip 
                                 style={{ fontSize: 18}} 
