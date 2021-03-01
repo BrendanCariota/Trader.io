@@ -1,6 +1,8 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import alpacaApi from '../services/alpaca'
+import {activityStyles} from '../styles/activityStyles'
+import moment from 'moment'
 
 class ActivityScreen extends React.Component {
 
@@ -31,10 +33,13 @@ class ActivityScreen extends React.Component {
         return <View>
             {this.state.activities.map((activity) => 
                 
-                <View key={activity.id}>
-                    <Text>{activity.symbol}</Text>
-                    <Text>{activity.side} {activity.qty} @ {activity.price}</Text>
-                    <Text>{activity.transaction_time}</Text>
+                <View style={activityStyles.activityScreen} key={activity.id}>
+                    <View style={activityStyles.activityContainer}>
+                        <Text>{activity.symbol}</Text>
+                        <Text style={activityStyles.info}>{activity.side} {activity.qty} @ ${activity.price}</Text>
+                        <Text>{moment(activity.transaction_time).format('MM/DD/YYYY')}</Text>    
+                    </View>
+                    
                 </View>
             
             )}
